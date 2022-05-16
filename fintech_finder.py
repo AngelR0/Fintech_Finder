@@ -27,7 +27,7 @@ candidate_database = {
 people = ['Lane', 'Ash', 'Jo', 'Kendell']
 
 
-def get_people(w3):
+def get_people():
     """Display the database of Fintech Finders candidates information"""
     db_list = list(candidate_database.values())
 
@@ -56,3 +56,56 @@ st.sidebar.write(account.address)
 
 # A sidebar that displays the balance of the customers account
 st.sidebar.write(get_balance(w3, account.address))
+# Create a select box to chose a FinTech Hire candidate
+person = st.sidebar.selectbox("Select a Person: ", people)
+
+# Create an input field to record the number of hours the candidate worked
+hours = st.sidebar.number_input("Number of Hours: ")
+st.sidebar.markdown("## Candidate Name, Hourly Rate, and Ethereum Address")
+
+# Identify the FinTech Hire Candidate
+candidate = candidate_database[person][0]
+
+# Write the FinTech Finder candidates name to the sidebar
+st.sidebar.write(candidate)
+
+# Identify the FinTech Finder candidates hourly rate
+hourly_rate = candidate_database[person][3]
+
+# Write the FinTech Finder candidates hourly rate to the sidebar
+st.sidebar.write(hourly_rate)
+
+# Identify the FinTech Finder candidates Ethereum Address
+candidate_address = candidate_database[person][1]
+
+# Write the Fintech Finder candidates Ethereum Address to the sidebar
+st.sidebar.write(candidate_address)
+
+# Write the Fintech Finder candidates name to the Sidebar
+st.sidebar.markdown("## Total Wage in Ether")
+
+
+# Write the equation that calculates the candidates wage
+wage = candidate_database[person][3] * hours
+
+# Adding the wage into a sidebar
+st.sidebar.write(wage)
+
+
+# Save the transaction
+if st.sidebar.button("Send Transaction"):
+
+    # Call the send_transaction function
+    transaction_hash = send_transaction(w3, account, candidate_address, wage)
+
+    # Markdown for the transaction hash
+    st.sidebar.markdown("## Validate Transaction Hash")
+
+    # Write the returnned transaction hash to the screen
+    st.sidebar.write(transaction_hash)
+
+    # Let's celebrate the successful payment
+    st.balloons()
+
+    # The function starts the Streamlit Application
+get_people()

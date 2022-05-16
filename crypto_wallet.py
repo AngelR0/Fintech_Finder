@@ -24,7 +24,7 @@ def generate_account():
     private, public = wallet.derive_account("eth")
 
     # Convert Private Key into an Ethereum Account
-    account = Account.privateKeyToAccount(private, public)
+    account = Account.privateKeyToAccount(private)
 
     # Return the account variable
     return account
